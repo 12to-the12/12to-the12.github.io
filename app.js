@@ -26,9 +26,9 @@ fetch(url)
                 const differenceb = document.getElementById('differenceb');
 
                 // set the content of the div to the field value
-                difference.textContent = `Logan is ${offset + 8} hours ahead of Santa Barbara time`;
+                difference.textContent = `${offset + 8} hours ahead of Santa Barbara`;
 
-                differenceb.textContent = `Logan is ${offset + 5} hours ahead of D.C.  time`;
+                differenceb.textContent = `${offset + 5} hours ahead of D.C.  time`;
 
 
                 const now = new Date();
@@ -38,7 +38,33 @@ fetch(url)
 
                 console.log(`The time is: ${time}`);
                 const loganTime = document.getElementById('loganTime');
-                loganTime.textContent = `it is ${time} where he is`;
+                loganTime.textContent = `${time}`;
+                
+
+                var options = { hour12: false,  hour: 'numeric', minute: 'numeric' };
+
+
+                forcomparison = future.toLocaleString('en-US', options); //  24 hour
+
+
+                const wakeup = new Date();
+                wakeup.setHours(10,0,0);
+
+                const bedtime = new Date();
+                bedtime.setHours(23,55,0);
+
+                const awake = document.getElementById('awake');
+                const disclaimer = document.getElementById('disclaimer');
+
+                if ( wakeup <= now && now <= bedtime ){
+                    awake.textContent = `Logan is probably awake`;
+                    console.log('logan is probably awake')
+                }
+                else {
+                    awake.textContent = `Logan is probably asleep`;
+                    disclaimer.textContent = `this website and it's associates are not liable for injuries related to contacting Logan at the aforementioned hour`;
+                    console.log('logan is probably asleep')
+                }
 
             })
             .catch(error => {
