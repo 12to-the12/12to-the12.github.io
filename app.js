@@ -55,9 +55,12 @@ fetch(url)
                 console.log(`The logan time is: ${logan}`);
 
 
+                
                 loganTime.textContent = `${logan}`;
 
 
+                let forComparison = now.toLocaleString("en-US", { timeZone: data.zoneName, hour12: false});
+                console.log(`The forComparison time is: ${forComparison}`);
 
 
 
@@ -65,9 +68,11 @@ fetch(url)
 
 
 
-                const comparison = new Date(Date.now());
-                comparison.setHours(now.getHours());
-                comparison.setMinutes(now.getMinutes());
+
+
+                const comparison = new Date(forComparison);
+                // comparison.setHours(logan.getHours());
+                // comparison.setMinutes(logan.getMinutes());
 
                 const wakeup = new Date(Date.now());
                 wakeup.setHours(10);
