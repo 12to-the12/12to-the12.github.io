@@ -32,20 +32,22 @@ fetch(url)
 
 
                 const now = new Date();
-                const future = new Date(now.getTime() + (offset + 0) * (60 * 60));
 
-                const time = future.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+               let formattedTime = now.toLocaleString("en-US", options, {timeZone: "America/Log_Angeles", hour12: true});
 
-                console.log(`The time is: ${time}`);
-                const loganTime = document.getElementById('loganTime');
-                loganTime.textContent = `${time}`;
+                const altered = new Date(now.getTime() + (offset + 0) * (60 * 60));
+
+                const time = altered.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+
+                console.log(`The time is: ${altered}`);
+                
                 
 
-                var options = { hour12: false,  hour: 'numeric', minute: 'numeric' };
-
-
-                forcomparison = future.toLocaleString('en-US', options); //  24 hour
-
+                var options = { hour12: true,  hour: 'numeric', minute: 'numeric' };
+                fordisplay = altered.toLocaleString('en-US', options); //  24 hour
+                
+                const loganTime = document.getElementById('loganTime');
+                loganTime.textContent = `${fordisplay}`;
 
                 const wakeup = new Date();
                 wakeup.setHours(10,0,0);
@@ -56,7 +58,11 @@ fetch(url)
                 const awake = document.getElementById('awake');
                 const disclaimer = document.getElementById('disclaimer');
 
-                if ( wakeup <= now && now <= bedtime ){
+                console.log(wakeup)
+                console.log(bedtime)
+                console.log(altered)
+
+                if ( wakeup <= altered && altered <= bedtime ){
                     awake.textContent = `Logan is probably awake`;
                     console.log('logan is probably awake')
                 }
