@@ -1,3 +1,12 @@
+const sbTime = document.getElementById('sbTime');
+const loganTime = document.getElementById('loganTime');
+const difference = document.getElementById('difference');
+const differenceb = document.getElementById('differenceb');
+const awake = document.getElementById('awake');
+const disclaimer = document.getElementById('disclaimer');
+
+
+
 
 const sheetId = '1JzDy_C4Tss6PGfVfVBomcd42knABlTHPk7Zl_jrvPws';
 const sheetName = 'Sheet1';
@@ -22,8 +31,7 @@ fetch(url)
                 console.log(data);
                 const offset = data.gmtOffset / (60 * 60); // UTC offset in hours
 
-                const difference = document.getElementById('difference');
-                const differenceb = document.getElementById('differenceb');
+
 
                 // set the content of the div to the field value
                 difference.textContent = `${offset + 8} hours ahead of Santa Barbara`;
@@ -31,45 +39,64 @@ fetch(url)
                 differenceb.textContent = `${offset + 5} hours ahead of D.C.  time`;
 
 
-                const now = new Date();
+                const timestamp = Date.now();
+                const now = new Date(timestamp) // local time
+                console.log(now)
 
-               let formattedTime = now.toLocaleString("en-US", options, {timeZone: "America/Log_Angeles", hour12: true});
 
-                const altered = new Date(now.getTime() + (offset + 0) * (60 * 60));
+                let sb = now.toLocaleString("en-US", { timeZone: "America/Los_Angeles", hour12: true, hour: "numeric", minute: "numeric" });
 
-                const time = altered.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+                console.log(`The sb time is: ${sb}`);
 
-                console.log(`The time is: ${altered}`);
-                
-                
+                // sbTime.textContent = `${sb}`;
 
-                var options = { hour12: true,  hour: 'numeric', minute: 'numeric' };
-                fordisplay = altered.toLocaleString('en-US', options); //  24 hour
-                
-                const loganTime = document.getElementById('loganTime');
-                loganTime.textContent = `${fordisplay}`;
 
-                const wakeup = new Date();
-                wakeup.setHours(10,0,0);
+                let logan = now.toLocaleString("en-US", { timeZone: data.zoneName, hour12: true, hour: "numeric", minute: "numeric" });
+                console.log(`The logan time is: ${logan}`);
 
-                const bedtime = new Date();
-                bedtime.setHours(23,55,0);
 
-                const awake = document.getElementById('awake');
-                const disclaimer = document.getElementById('disclaimer');
+                loganTime.textContent = `${logan}`;
+
+
+
+
+
+
+
+
+
+                const comparison = new Date(Date.now());
+                comparison.setHours(now.getHours());
+                comparison.setMinutes(now.getMinutes());
+
+                const wakeup = new Date(Date.now());
+                wakeup.setHours(10);
+                wakeup.setMinutes(0);
+
+                const bedtime = new Date(Date.now());
+                bedtime.setHours(23);
+                bedtime.setMinutes(59);
+
+
 
                 console.log(wakeup)
                 console.log(bedtime)
-                console.log(altered)
+                console.log(comparison)
+                console.log(wakeup <= comparison)
+                console.log(comparison <= bedtime)
+                console.log(wakeup <= comparison && comparison <= bedtime)
 
-                if ( wakeup <= altered && altered <= bedtime ){
+                if (wakeup <= comparison && comparison <= bedtime) {
                     awake.textContent = `Logan is probably awake`;
                     console.log('logan is probably awake')
                 }
-                else {
+                else if(wakeup > comparison && comparison > bedtime) {
                     awake.textContent = `Logan is probably asleep`;
                     disclaimer.textContent = `this website and it's associates are not liable for injuries related to contacting Logan at the aforementioned hour`;
                     console.log('logan is probably asleep')
+                }
+                else {
+                    awake.textContent = `Tell Logan his website is broken`;
                 }
 
             })
