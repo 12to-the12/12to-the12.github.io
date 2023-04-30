@@ -100,9 +100,9 @@ fetch(url)
                     disclaimer.textContent = `this website and it's associates are not liable for injuries related to contacting Logan at the aforementioned hour`;
                     console.log('logan is probably asleep')
                 }
-                else {
-                    awake.textContent = `Tell Logan his website is broken`;
-                }
+                // else {
+                //     awake.textContent = `Tell Logan his website is broken`;
+                // }
 
             })
             .catch(error => {
