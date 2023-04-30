@@ -1,3 +1,6 @@
+// import './style.css';
+// import css from "style.css";
+// require("./style    .css")
 const sbTime = document.getElementById('sbTime');
 const loganTime = document.getElementById('loganTime');
 const difference = document.getElementById('difference');
