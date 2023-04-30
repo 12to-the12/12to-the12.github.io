@@ -57,8 +57,8 @@
 node_modules/
 
 # Ignore build directories.
-# /build
-# /dist
+/build
+/dist
 
 # ignore composer vendor directory
 /vendor
